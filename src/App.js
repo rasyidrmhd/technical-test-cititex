@@ -45,7 +45,6 @@ function App() {
                 })}
                 <td className="text-start">{item.categoryDescription}</td>
                 <td className="text-start">{item.productDescription}</td>
-
                 <td>{totalStock}</td>
                 <td>{percent.toFixed(2)} %</td>
                 <td>{totalOrder}</td>
