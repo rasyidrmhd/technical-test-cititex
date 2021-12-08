@@ -1,4 +1,3 @@
-import "./App.css";
 import data from "./data/data.json";
 
 function App() {
@@ -25,11 +24,9 @@ function App() {
                 <td>{idx + 1}</td>
                 {data.location.map((location, idx) => {
                   return (
-                    <td>
+                    <td key={idx}>
                       {JSON.parse(item.product_stock).map((stock) => {
-                        if (Number(Object.keys(stock)[0]) === location.id) {
-                          return Number(Object.values(stock)[0]);
-                        }
+                        return stock[location.id] ? stock[location.id] : "";
                       })}
                     </td>
                   );
@@ -39,13 +36,24 @@ function App() {
                 <td>
                   {JSON.parse(item.product_stock)
                     .map((stock) => Object.values(stock)[0])
-                    .reduce((prev, curr) => prev + curr, 0)}
+                    .reduce((prev, curr) => prev + curr)}
                 </td>
-                <td></td>
                 <td>
-                  {JSON.parse(item.items).map((items) => {
-                    return items.qty;
-                  })}
+                  {(
+                    (JSON.parse(item.items)
+                      .map((items) => items.qty)
+                      .reduce((prev, curr) => prev + curr) /
+                      JSON.parse(item.product_stock)
+                        .map((stock) => Object.values(stock)[0])
+                        .reduce((prev, curr) => prev + curr)) *
+                    100
+                  ).toFixed(2)}{" "}
+                  %
+                </td>
+                <td>
+                  {JSON.parse(item.items)
+                    .map((items) => items.qty)
+                    .reduce((prev, curr) => prev + curr)}
                 </td>
               </tr>
             );
